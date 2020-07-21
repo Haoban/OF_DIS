@@ -197,11 +197,11 @@ int main( int argc, char** argv )
   cv::Mat img_ao_mat, img_bo_mat, img_tmp;
   int rpyrtype, nochannels, incoltype;
   #if (SELECTCHANNEL==1 | SELECTCHANNEL==2) // use Intensity or Gradient image      
-  incoltype = IMREAD_GRAYSCALE;        
+  incoltype = cv::IMREAD_GRAYSCALE;        
   rpyrtype = CV_32FC1;
   nochannels = 1;
   #elif (SELECTCHANNEL==3) // use RGB image
-  incoltype = IMREAD_COLOR;
+  incoltype = cv::IMREAD_COLOR;
   rpyrtype = CV_32FC3;
   nochannels = 3;      
   #endif
