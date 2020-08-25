@@ -420,6 +420,24 @@ int main( int argc, char** argv )
   SavePFMFile(flowout, outfile);      
   #endif
 
+  //Warp with flow and save
+  cv::Mat map(flowout.size(), CV_32FC2);
+  for (int y = 0; y < map.rows; ++y)
+  {
+      for (int x = 0; x < map.cols; ++x)
+      {
+          cv::Point2f f = flowout.at<cv::Point2f>(y, x);
+          map.at<cv::Point2f>(y, x) = cv::Point2f(x + f.x, y + f.y);
+      }
+  }
+  cv::Mat origIm = cv::imread(imgfile_bo);
+  cv::Mat warpFrame;
+  cv::remap(origIm, warpFrame, map, cv::Mat() /*empty map as map is (x,y) correspondence*/ , cv::INTER_LINEAR, cv::BORDER_CONSTANT, 0 );
+
+  std::string oname2 = std::string(outfile)+".png";
+  cv::imwrite(oname2, warpFrame );
+
+
   if (verbosity > 1)
   {
     gettimeofday(&tv_end_all, NULL);
